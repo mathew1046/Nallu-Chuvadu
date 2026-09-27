@@ -1,0 +1,4 @@
+.login-cta { align-self: center; }
+.login-cta p { color: #bad1c7; font-size: .85rem; margin: 16px 0 0; }
+.login-cta a:not(.button) { color: #fff; font-weight: 700; }
+.today-card::after { pointer-events: none; }

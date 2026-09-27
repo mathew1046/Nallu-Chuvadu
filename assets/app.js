@@ -1,0 +1,1 @@
+document.querySelectorAll('input[type="file"]').forEach(input => input.addEventListener('change', () => { const area=input.closest('.upload'); if(input.files[0]) { area.classList.add('selected'); area.querySelector('b').textContent=input.files[0].name; }}));
