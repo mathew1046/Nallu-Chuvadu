@@ -3,15 +3,27 @@ declare(strict_types=1);
 
 session_start();
 
+$localEnv = __DIR__ . '/.env';
+if (is_file($localEnv)) {
+    $values = parse_ini_file($localEnv, false, INI_SCANNER_RAW) ?: [];
+    foreach ($values as $key => $value) {
+        if (getenv($key) === false) putenv($key . '=' . $value);
+    }
+}
+
 const DB_HOST = 'localhost';
 const DB_NAME = 'nalla_chuvadu';
-const DB_USER = 'root';
+const DB_USER = 'nallu_app';
 const DB_PASS = '';
 
 function db(): PDO {
     static $pdo;
     if (!$pdo) {
-        $pdo = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4', DB_USER, DB_PASS, [
+        $host = getenv('DB_HOST') ?: DB_HOST;
+        $name = getenv('DB_NAME') ?: DB_NAME;
+        $user = getenv('DB_USER') ?: DB_USER;
+        $pass = getenv('DB_PASS') ?: DB_PASS;
+        $pdo = new PDO('mysql:host=' . $host . ';dbname=' . $name . ';charset=utf8mb4', $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
